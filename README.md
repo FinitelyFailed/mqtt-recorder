@@ -1,4 +1,4 @@
-A local MQTT broker is required, such as mosquttio.
+A local MQTT broker is required, such as mosquitto.
 Tested and developed on Ubuntu 20.10.
 
 Use -record to record stream from MQTT.
