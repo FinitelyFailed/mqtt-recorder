@@ -35,7 +35,10 @@ namespace Mqtt
                 Console.WriteLine("### CONNECTED WITH SERVER ###");
 
                 // Subscribe to a topic
-                await _mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).Build());
+                if (string.IsNullOrEmpty(topic))
+                {
+                    await _mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).Build());
+                }
 
                 Console.WriteLine("### SUBSCRIBED ###");
             });

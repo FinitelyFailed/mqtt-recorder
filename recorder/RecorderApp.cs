@@ -45,6 +45,11 @@ namespace Recorder
             //logWriter.Dispose();
 
             await _mqttService.Connect();
+
+            while (IsRunning)
+            {
+                await Task.Delay(500);
+            }
         }
 
         public async Task StopAsync()

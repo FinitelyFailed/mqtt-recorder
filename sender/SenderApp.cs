@@ -7,15 +7,22 @@ namespace Sender
 {
     public class SenderApp : ISubApp 
     {
-        private string _input;
+        private string _input;        
         //private MqttBroker _mqttBroker;
         private MqttService _mqttService;
 
-        public SenderApp(string input)
+        public SenderApp(string input, string url = null)
         {
             _input = input;
 
-            _mqttService = new MqttService("localhost", "#");
+            if  (string.IsNullOrEmpty(url)) 
+            {
+                _mqttService = new MqttService("localhost", "#");
+            }
+            else
+            {
+                _mqttService = new MqttService(url, "#");
+            }
         }
 
         public async Task StartAsync()

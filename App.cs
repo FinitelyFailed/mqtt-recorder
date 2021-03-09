@@ -54,6 +54,7 @@ public class App
     private ISubApp ParseSendInput(string[] args)
     {
         string input = null;
+        string url = null;
 
         for (int i = 0; i < args.Length; ++i)
         {
@@ -65,6 +66,13 @@ public class App
                         input = args[i];
                         break;
                     }
+                    case "-url":
+                    {
+                        if (!ValidateArgWithParam(i, args)) { return null; }
+                        ++i;
+                        url = args[i];
+                        break;
+                    }
                 default:
                     {
                         Console.WriteLine($"WARNING: Argument {args[i]} does nothing.");
@@ -73,7 +81,7 @@ public class App
             }
         }
 
-        SenderApp senderApp = new SenderApp(input);
+        SenderApp senderApp = new SenderApp(input, url);
         return senderApp;
     }
 
