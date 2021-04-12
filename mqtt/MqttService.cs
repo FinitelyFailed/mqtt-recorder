@@ -32,10 +32,10 @@ namespace Mqtt
 
             _mqttClient.UseConnectedHandler(async e =>
             {
-                Console.WriteLine("### CONNECTED WITH SERVER ###");
+                Console.WriteLine("### CONNECTED TO SERVER ###");
 
                 // Subscribe to a topic
-                if (string.IsNullOrEmpty(topic))
+                if (!string.IsNullOrEmpty(topic))
                 {
                     await _mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).Build());
                 }
@@ -45,7 +45,8 @@ namespace Mqtt
 
             _mqttClient.UseDisconnectedHandler(async e =>
             {
-                Console.WriteLine("### DISCONNECTED FROM SERVER ###");
+                Console.WriteLine($"### DISCONNECTED FROM SERVER ###");
+                Console.WriteLine($"Reason: {e.Reason} auth: {e.AuthenticateResult}");
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
                 try
@@ -103,7 +104,7 @@ namespace Mqtt
         private IMqttClientOptions CreateOptions(string url)
         {
             MqttClientOptionsBuilder builder = new MqttClientOptionsBuilder();
-            builder.WithClientId("MqttRecorder");
+            builder.WithClientId($"MqttRecorder-{Guid.NewGuid().ToString()}");
             if (url.StartsWith("ws")) 
             {
                 builder.WithWebSocketServer(Url);
